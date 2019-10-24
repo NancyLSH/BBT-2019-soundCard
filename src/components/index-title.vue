@@ -60,12 +60,12 @@ export default {
   justify-content: space-between;
 }
 .title .maple .item {
-  width: 50%;
-  height: 100%;
+  width: 60%;
+  height: 99%;
   display: flex;
   align-items: center;
   flex-direction: row-reverse;
-  animation: bg 1.5s linear;
+  animation: bg 0.9875s linear;
   animation-fill-mode: forwards;
 }
 .title .maple .item img {
@@ -75,7 +75,7 @@ export default {
 @keyframes bg {
   0% {
     background: #e5e5e3;
-    width: 50%;
+    width: 60%;
   }
   25% {
     background: #e5e5e3;
@@ -99,7 +99,7 @@ export default {
 }
 .title .mapleForSmoke .item {
   background-color: #e5e5e3;
-  animation: SmoketoAside 4.8s cubic-bezier(0.03, 0.13, 0.52, 0.82);
+  animation: SmoketoAside 3s cubic-bezier(0.03, 0.13, 0.52, 0.82);
   animation-fill-mode: forwards;
 }
 @keyframes SmoketoAside {

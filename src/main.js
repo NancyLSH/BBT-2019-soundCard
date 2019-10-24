@@ -6,6 +6,7 @@ import VueRouter from 'vue-router'
 import router from "./router"
 import axios from 'axios'
 import VueHead from 'vue-head'
+import "./API/apis"
 
 Vue.use(VueHead)
 Vue.use(ElementUI);

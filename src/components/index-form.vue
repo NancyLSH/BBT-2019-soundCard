@@ -9,21 +9,23 @@
     <div class="formitem" style="width: 93%;">
       <div class="title" style="padding-left: 4.5vw;">属性：</div>
       <div class="chooseBox">
-        <div class="box">
-          <img :src="sexBox" />
+        <div class="box" @click="chooseSex('male')">
+          <img :src="maleBox" />
           <div class="text">
             <img :src="male" />我是汉纸
           </div>
         </div>
-        <div class="box" style="text-align:right;">
-          <img :src="nonsex" />
+        <div class="box" style="text-align:right;" @click="chooseSex('female')">
+          <img :src="femaleBox" />
           <div class="text">
             <img :src="female" />我是妹纸
           </div>
         </div>
       </div>
     </div>
-    <div class="btn"></div>
+    <div class="btn" @click="submitInfo">
+      <img :src="btnImg" />
+    </div>
   </div>
 </template>
 
@@ -32,7 +34,9 @@ import sexBox from "../assets/images/index_selectSex.png";
 import selectedSexBox from "../assets/images/index_selectedSex.png";
 import male from "../assets/images/index_icon_male.png";
 import female from "../assets/images/index_icon_female.png";
-
+import btnImg from "../assets/images/index_submit.png";
+// import apis from "../API/apis";
+import { baseUrl } from "../API/api.config";
 export default {
   name: "indexForm",
   data() {
@@ -41,8 +45,57 @@ export default {
       sexBox: selectedSexBox,
       nonsex: sexBox,
       male: male,
-      female: female
+      female: female,
+      btnImg: btnImg,
+      sex: "unknown",
+      maleBox: sexBox,
+      femaleBox: sexBox,
+      res: ""
     };
+  },
+  methods: {
+    chooseSex(sex) {
+      this.sex = sex;
+      if (sex === "male") {
+        this.maleBox = selectedSexBox;
+        this.femaleBox = sexBox;
+      } else if (sex === "female") {
+        this.maleBox = sexBox;
+        this.femaleBox = selectedSexBox;
+      } else {
+        this.maleBox = sexBox;
+        this.femaleBox = sexBox;
+      }
+    },
+    submitInfo() {
+      console.log("baseUrl", baseUrl);
+      if (!this.nickname) {
+        alert("have no nickname");
+      } else if (this.sex === "unknown") {
+        alert("have no sex");
+      } else {
+        let data = {
+          name: this.nickname,
+          gender: this.sex,
+          language: "Chinese"
+        };
+        // this.res = apis.info(data);
+        this.$axios({
+          url: baseUrl+"/info",
+          method: "post",
+          data: data,
+          headers: {
+            "Content-Type": " application/json"
+          }
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    }
   }
 };
 </script>
@@ -58,7 +111,7 @@ export default {
   flex-direction: column;
   color: #4e4d4d;
   font-size: 4vw;
-  margin:auto;
+  margin: auto;
   margin-top: 15%;
 }
 .entry .main .form .formitem .inputBox {
@@ -68,7 +121,11 @@ export default {
   border-radius: 1.2vw;
   margin-top: 2vw;
   text-align: center;
-  background-image: linear-gradient(to right, #c2dff55b, #a1baba00);
+  background-image: linear-gradient(
+    to right,
+    rgba(194, 223, 245, 0.2),
+    rgba(161, 186, 186, 0)
+  );
 }
 .entry .main .form .formitem .inputBox input {
   width: 95%;
@@ -98,5 +155,13 @@ export default {
   width: 4vw;
   height: 4vw;
   margin-right: 3vw;
+}
+.entry .form .btn {
+  width: 60%;
+  margin: auto;
+  margin-top: 20%;
+}
+.entry .form .btn img {
+  width: 100%;
 }
 </style>
