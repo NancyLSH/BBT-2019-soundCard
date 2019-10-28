@@ -1,13 +1,13 @@
 <template>
   <div class="form">
     <div class="formitem" style="width: 84%;">
-      <div class="title">昵称：</div>
+      <div class="title">昵称：<div class="errmsg">{{nameerrmsg}}</div></div>
       <div class="inputBox">
         <input v-model="nickname" type="text" />
       </div>
     </div>
     <div class="formitem" style="width: 93%;">
-      <div class="title" style="padding-left: 4.5vw;">属性：</div>
+      <div class="title" style="padding-left: 4.5vw;">属性：<div class="errmsg">{{errmsg}}</div></div>
       <div class="chooseBox">
         <div class="box" @click="chooseSex('male')">
           <img :src="maleBox" />
@@ -35,8 +35,7 @@ import selectedSexBox from "../assets/images/index_selectedSex.png";
 import male from "../assets/images/index_icon_male.png";
 import female from "../assets/images/index_icon_female.png";
 import btnImg from "../assets/images/index_submit.png";
-// import apis from "../API/apis";
-import { baseUrl } from "../API/api.config";
+import { submitInfo } from "../API/apis";
 export default {
   name: "indexForm",
   data() {
@@ -50,7 +49,10 @@ export default {
       sex: "unknown",
       maleBox: sexBox,
       femaleBox: sexBox,
-      res: ""
+      submit: true,
+      res: "",
+      nameerrmsg:'',
+      errmsg:''
     };
   },
   methods: {
@@ -68,32 +70,30 @@ export default {
       }
     },
     submitInfo() {
-      console.log("baseUrl", baseUrl);
+      this.nameerrmsg = ''
+      this.errmsg = ''
       if (!this.nickname) {
-        alert("have no nickname");
+        this.nameerrmsg = "你还没填写昵称"
       } else if (this.sex === "unknown") {
-        alert("have no sex");
+        this.errmsg = "你还没选择性别"
       } else {
         let data = {
           name: this.nickname,
           gender: this.sex,
-          language: "Chinese"
         };
-        // this.res = apis.info(data);
-        this.$axios({
-          url: baseUrl+"/info",
-          method: "post",
-          data: data,
-          headers: {
-            "Content-Type": " application/json"
-          }
-        })
-          .then(res => {
-            console.log(res);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        if (this.submit) {
+          this.submit = false
+          submitInfo(data)
+            .then(res => {
+              if (res.status === 200) {
+                this.$router.push("record");
+              }
+            })
+            .catch(err => {
+              this.submit = true;
+              console.log(err);
+            });
+        }
       }
     }
   }
@@ -142,6 +142,7 @@ export default {
 }
 .entry .chooseBox .box img {
   width: 100%;
+  pointer-events: none;
 }
 .entry .chooseBox .box .text {
   color: #4e4d4d;
@@ -155,6 +156,7 @@ export default {
   width: 4vw;
   height: 4vw;
   margin-right: 3vw;
+  pointer-events: none;
 }
 .entry .form .btn {
   width: 60%;
@@ -163,5 +165,12 @@ export default {
 }
 .entry .form .btn img {
   width: 100%;
+  pointer-events: none;
+}
+.entry .errmsg{
+  color: #ff3b30;
+}
+.entry .title{
+  display: flex;
 }
 </style>

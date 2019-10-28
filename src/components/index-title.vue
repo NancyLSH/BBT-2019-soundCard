@@ -71,6 +71,7 @@ export default {
 .title .maple .item img {
   height: 66%;
   line-height: 100%;
+  pointer-events: none;
 }
 @keyframes bg {
   0% {

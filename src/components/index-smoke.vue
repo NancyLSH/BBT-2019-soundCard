@@ -36,6 +36,7 @@ export default {
 }
 .smoke .item img {
   width: 100%;
+  pointer-events: none;
 }
 .smoke .topSmoke {
   margin-bottom: 1%;
@@ -44,6 +45,7 @@ export default {
 }
 .smoke .topSmoke img {
   position: absolute;
+  pointer-events: none;
   top: 2.5%;
 }
 .smoke .topSmoke .block {

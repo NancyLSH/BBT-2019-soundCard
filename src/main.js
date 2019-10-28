@@ -7,7 +7,9 @@ import router from "./router"
 import axios from 'axios'
 import VueHead from 'vue-head'
 import "./API/apis"
+import VueTouch from 'vue-touch'
 
+Vue.use(VueTouch, {name: 'v-touch'})
 Vue.use(VueHead)
 Vue.use(ElementUI);
 const routerPush = VueRouter.prototype.push
