@@ -6,7 +6,7 @@
           <img :src="posterBg" />
         </div>
         <div class="info">
-          <div class="name">{{info.character}}</div>
+          <div class="name">{{info.name}}</div>
           <div class="tip">专属声音气质报告</div>
           <div class="lists">
             <div class="title">
@@ -212,10 +212,10 @@ export default {
   display: flex;
   line-height: 10vw;
 }
-.content{
-    width: 100%
+.content {
+  width: 100%;
 }
-.content .str{
-    text-align: right
+.content .str {
+  text-align: right;
 }
 </style>
