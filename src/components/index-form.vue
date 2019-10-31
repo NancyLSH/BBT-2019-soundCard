@@ -1,25 +1,27 @@
 <template>
   <div class="form">
     <div class="formitem" style="width: 84%;">
-      <div class="title">昵称：<div class="errmsg">{{nameerrmsg}}</div></div>
+      <div class="title">
+        昵称：
+        <div class="errmsg">{{ nameerrmsg }}</div>
+      </div>
       <div class="inputBox">
         <input v-model="nickname" type="text" />
       </div>
     </div>
     <div class="formitem" style="width: 93%;">
-      <div class="title" style="padding-left: 4.5vw;">属性：<div class="errmsg">{{errmsg}}</div></div>
+      <div class="title" style="padding-left: 4.5vw;">
+        属性：
+        <div class="errmsg">{{ errmsg }}</div>
+      </div>
       <div class="chooseBox">
         <div class="box" @click="chooseSex('male')">
           <img :src="maleBox" />
-          <div class="text">
-            <img :src="male" />我是汉纸
-          </div>
+          <div class="text"><img :src="male" />我是汉纸</div>
         </div>
         <div class="box" style="text-align:right;" @click="chooseSex('female')">
           <img :src="femaleBox" />
-          <div class="text">
-            <img :src="female" />我是妹纸
-          </div>
+          <div class="text"><img :src="female" />我是妹纸</div>
         </div>
       </div>
     </div>
@@ -51,8 +53,8 @@ export default {
       femaleBox: sexBox,
       submit: true,
       res: "",
-      nameerrmsg:'',
-      errmsg:''
+      nameerrmsg: "",
+      errmsg: ""
     };
   },
   methods: {
@@ -70,19 +72,19 @@ export default {
       }
     },
     submitInfo() {
-      this.nameerrmsg = ''
-      this.errmsg = ''
+      this.nameerrmsg = "";
+      this.errmsg = "";
       if (!this.nickname) {
-        this.nameerrmsg = "你还没填写昵称"
+        this.nameerrmsg = "你还没填写昵称";
       } else if (this.sex === "unknown") {
-        this.errmsg = "你还没选择性别"
+        this.errmsg = "你还没选择性别";
       } else {
         let data = {
           name: this.nickname,
-          gender: this.sex,
+          gender: this.sex
         };
         if (this.submit) {
-          this.submit = false
+          this.submit = false;
           submitInfo(data)
             .then(res => {
               if (res.status === 200) {
@@ -151,10 +153,11 @@ export default {
   top: 0;
   margin: 0 6vw;
   line-height: 9.8vw;
+  display: flex;
+  align-items: center;
 }
 .entry .form .formitem .box .text img {
   width: 4vw;
-  height: 4vw;
   margin-right: 3vw;
   pointer-events: none;
 }
@@ -167,10 +170,10 @@ export default {
   width: 100%;
   pointer-events: none;
 }
-.entry .errmsg{
+.entry .errmsg {
   color: #ff3b30;
 }
-.entry .title{
+.entry .title {
   display: flex;
 }
 </style>

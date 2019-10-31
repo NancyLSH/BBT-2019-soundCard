@@ -43,7 +43,7 @@ export default {
       this.$router.push("record");
     },
     signup() {
-      window.location.href = "https://hemc.100steps.net/2019/love-in-anchor/";
+      window.location.href = "https://hemc.100steps.net/2019/anchor/recruit";
     }
   }
 };
@@ -56,6 +56,8 @@ export default {
 }
 .poster {
   height: 100%;
+  padding-top: 10%;
+  box-sizing: border-box;
 }
 .poster .savetip {
   color: #7e9998;
@@ -77,8 +79,10 @@ export default {
   margin-bottom: 5%;
 }
 .poster .smoke {
-  float: right;
-  margin-top: -44%;
+  /* float: right; */
+  position: absolute;
+  bottom: 0;
+  right: 0;
   width: 18%;
 }
 .poster .smoke img {

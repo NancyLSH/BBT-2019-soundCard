@@ -1,52 +1,49 @@
-import {
-    baseUrl
-} from "./api.config"
-import {
-    fetch
-} from "./fetch"
+import { baseUrl } from "./api.config";
+import { fetch as CustomFetch } from "./fetch";
+import qs from "qs";
 // import wx from "weixin-js-sdk"
 
 export function submitInfo(data) {
-    return fetch({
-        url: baseUrl + "/info",
-        method: "post",
-        data: data
-    })
+  return CustomFetch({
+    url: baseUrl + "/info",
+    method: "post",
+    data: data
+  });
 }
 
 export function wxconfig() {
-    return fetch({
-        url: "https://hemc.100steps.net/2017/wechat/Home/Public/getJsApi",
-        method: "post",
-        data: {
-            url: location.href
-        }
-    })
+  return fetch("https://hemc.100steps.net/2017/wechat/Home/Public/getJsApi", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: qs.stringify({ url: location.href.split("#")[0] })
+  }).then(res => res.json());
 }
 export function submitId(id) {
-    return fetch({
-        url: baseUrl + '/audio',
-        method: "post",
-        data: {
-            id: id
-        }
-    })
+  return CustomFetch({
+    url: baseUrl + "/audio",
+    method: "post",
+    data: {
+      id: id
+    }
+  });
 }
 export function report() {
-    return fetch({
-        url: baseUrl + "/report",
-        method: "get"
-    })
+  return CustomFetch({
+    url: baseUrl + "/report",
+    method: "get"
+  });
 }
 export function getPic() {
-    return fetch({
-        url: baseUrl + "/report/picture",
-        method: "get"
-    })
+  return CustomFetch({
+    url: baseUrl + "/report/picture",
+    method: "get"
+  });
 }
 export function getText() {
-    return fetch({
-        url: baseUrl + "/text",
-        method: "get"
-    })
+  return CustomFetch({
+    url: baseUrl + "/text",
+    method: "get"
+  });
 }

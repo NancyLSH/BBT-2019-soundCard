@@ -5,13 +5,19 @@
         <div class="bg">
           <img :src="posterBg" />
         </div>
+        <audio
+          :src="info.url"
+          volume="1"
+          ref="audio"
+          @ended="playRadio"
+        ></audio>
         <div class="info">
-          <div class="name">{{info.name}}</div>
+          <div class="name">{{ info.name }}</div>
           <div class="tip">专属声音气质报告</div>
           <div class="lists">
             <div class="title">
               音质特色：
-              <div class="infoBox">{{info.property}}</div>
+              <div class="infoBox">{{ info.property }}</div>
             </div>
             <div class="title">
               心动指数：
@@ -23,25 +29,27 @@
             </div>
             <div class="title">
               分析报告：
-              <div class="infoBox">{{info.description}}</div>
+              <div class="infoBox">{{ info.description }}</div>
             </div>
           </div>
           <div class="radio">
-            <div class="btn" @click="playRadio">
-              <img :src="playerBtn" />
-            </div>
+            <div class="btn"></div>
             <div class="text">
               这是为你匹配的声音，快来听听吧
               <div class="content">
-                <div class="str">{{firststr}}</div>
-                <div class="str">{{laststr}}</div>
+                <div class="str">{{ firststr }}</div>
+                <div class="str">{{ laststr }}</div>
               </div>
             </div>
           </div>
         </div>
         <div class="poster">
-          <img :src="poster" style="width:100%;height: 100%;pointer-events: all;opacity: 0;" />
+          <img
+            :src="poster"
+            style="width:100%;height: 100%;opacity: 0; z-index: 999;"
+          />
         </div>
+        <img :src="playerBtn" @click="playRadio" id="control_music" />
       </div>
     </div>
   </div>
@@ -52,8 +60,7 @@ import posterBg from "../assets/images/poster_box.png";
 import start from "../assets/images/poster_play_btn.png";
 import affection from "../assets/images/poster_affection.png";
 import pause from "../assets/images/poster_pause_btn.png";
-import { report, getPic, wxconfig } from "../API/apis";
-import wx from "weixin-js-sdk";
+import { report, getPic } from "../API/apis";
 export default {
   name: "posterMain",
   data() {
@@ -66,12 +73,26 @@ export default {
       play: false,
       info: {},
       firststr: "",
-      laststr: ""
+      laststr: "",
+      status: "paused"
     };
   },
   methods: {
     playRadio() {
-      this.play = !this.play;
+      this.status = this.nextStatus;
+      let audio = this.$refs.audio;
+      if (this.status === "running") {
+        this.playerBtn = pause;
+        audio.play();
+      } else {
+        this.playerBtn = start;
+        audio.pause();
+      }
+    }
+  },
+  computed: {
+    nextStatus() {
+      return this.status == "paused" ? "running" : "paused";
     }
   },
   mounted() {
@@ -101,31 +122,6 @@ export default {
       .catch(err => {
         console.log(err);
       });
-    wxconfig().then(res => {
-      wx.config({
-        debug: false,
-        appId: res.appId,
-        timestamp: res.timestamp,
-        nonceStr: res.nonceStr,
-        signature: res.signature,
-        jsApiList: ["playVoice", "stopVoice"]
-      });
-      wx.ready(function() {
-        if (!this.play) {
-          this.playerBtn = pause;
-          wx.playVoice({
-            localId: this.info.url
-          });
-          //   播放
-        } else {
-          this.playerBtn = start;
-          wx.stopVoice({
-            localId: this.info.url
-          });
-          //停止
-        }
-      });
-    });
   }
 };
 </script>
@@ -135,7 +131,6 @@ export default {
   height: 81vw;
   margin: auto;
   width: 85%;
-  margin-top: 20%;
 }
 .posterMain,
 .posterMain .poster .container {
@@ -143,7 +138,7 @@ export default {
 }
 .posterMain img {
   width: 100%;
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 .posterMain .posterbg,
 .posterMain .poster,
@@ -153,7 +148,7 @@ export default {
   width: 100%;
 }
 .posterMain .poster {
-  height: 70%;
+  height: 100%;
   top: 0;
 }
 .posterMain .poster .container .info {
@@ -194,7 +189,7 @@ export default {
   align-items: center;
 }
 .posterMain .radio {
-  margin-top: 7%;
+  margin-top: 5%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -217,5 +212,16 @@ export default {
 }
 .content .str {
   text-align: right;
+}
+audio {
+  position: absolute;
+  z-index: -99;
+  opacity: 0;
+}
+#control_music {
+  position: absolute;
+  bottom: 10%;
+  left: 10%;
+  width: 12%;
 }
 </style>

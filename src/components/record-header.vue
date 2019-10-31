@@ -5,7 +5,7 @@
     </div>
     <div class="text">
       <div class="tip">随便说两句吧~或者试试推荐文案：</div>
-      <div class="recommendation">{{text}}</div>
+      <div class="recommendation">{{ text }}</div>
     </div>
   </div>
 </template>
@@ -57,6 +57,7 @@ export default {
   font-size: 3.5vw;
   color: #4e4d4d;
   letter-spacing: 0.4vw;
+  user-select: none;
 }
 .recommendation {
   color: #4e4d4d;
@@ -65,5 +66,6 @@ export default {
   text-align: center;
   margin-top: 3%;
   letter-spacing: 0.3vw;
+  user-select: none;
 }
 </style>
