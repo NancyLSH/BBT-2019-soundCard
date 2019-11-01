@@ -1,9 +1,9 @@
 <template>
   <div class="poster">
     <posterMain></posterMain>
-    <div class="savetip">长按保存图片</div>
+    <div class="savetip">长按气质报告生成专属图片</div>
     <div class="btns">
-      <div class="btn" style="margin-bottom:10%" @click="textAgain">
+      <div class="btn" style="margin-bottom:4vh" @click="textAgain">
         <img :src="again" />
       </div>
       <div class="btn" @click="signup">
@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="bbt">
-      <img :src="bbtLogo" style="width:25%;pointer-events: none;" />
+      <img :src="bbtLogo" style="width:20%;pointer-events: none;" />
     </div>
     <div class="smoke">
       <img :src="smoke" />
@@ -56,14 +56,15 @@ export default {
 }
 .poster {
   height: 100%;
-  padding-top: 10%;
+  padding-top: 6vh;
   box-sizing: border-box;
 }
 .poster .savetip {
   color: #7e9998;
   text-align: center;
   font-size: 4vw;
-  margin: 10vw 0 9% 0;
+  margin: 0 0 5vh 0;
+  user-select: none;
 }
 .poster .btns {
   width: 70%;
@@ -77,7 +78,7 @@ export default {
   text-align: center;
   position: absolute;
   width: 100%;
-  bottom: 3%;
+  bottom: 1vh;
 }
 .poster .smoke {
   /* float: right; */

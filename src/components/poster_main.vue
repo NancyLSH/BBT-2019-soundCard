@@ -1,9 +1,9 @@
 <template>
   <div class="posterMain">
     <div class="poster">
-      <div class="container">
-        <div class="bg">
-          <img :src="posterBg" />
+      <div class="container" ref="container">
+        <div class="bg" style="height: 100%;">
+          <img :src="posterBg" style="height: 100%;" />
         </div>
         <audio
           :src="info.url"
@@ -32,7 +32,7 @@
               <div class="infoBox">{{ info.description }}</div>
             </div>
           </div>
-          <div class="radio">
+          <div class="radio" ref="radioHidden">
             <div class="btn"></div>
             <div class="text">
               这是为你匹配的声音，快来听听吧~
@@ -49,7 +49,9 @@
             style="width:100%;height: 100%;opacity: 0; z-index: 999;"
           />
         </div>
-        <img :src="playerBtn" @click="playRadio" id="control_music" />
+        <div id="control__container" @click="playRadio" ref="radio">
+          <img :src="playerBtn" id="control_music" />
+        </div>
       </div>
     </div>
   </div>
@@ -96,6 +98,13 @@ export default {
     }
   },
   mounted() {
+    let containerInfo = this.$refs.container.getBoundingClientRect();
+    let radioHiddenInfo = this.$refs.radioHidden.getBoundingClientRect();
+    console.log(containerInfo);
+    console.log(radioHiddenInfo);
+    let radio = this.$refs.radio;
+    radio.style.top = `${radioHiddenInfo.top - containerInfo.top + 5}px`;
+    radio.style.left = `${radioHiddenInfo.left - containerInfo.left + 5}px`;
     report()
       .then(res => {
         if (res.status === 401) {
@@ -128,9 +137,12 @@ export default {
 
 <style>
 .posterMain {
-  height: 81vw;
+  height: 58vh;
   margin: auto;
   width: 85%;
+}
+.info * {
+  user-select: none;
 }
 .posterMain,
 .posterMain .poster .container {
@@ -165,7 +177,7 @@ export default {
   margin-right: 2%;
 }
 .posterMain .tip {
-  margin-bottom: 8%;
+  margin-bottom: 7%;
 }
 .posterMain .name {
   line-height: 10vw;
@@ -182,14 +194,14 @@ export default {
   width: 90%;
 }
 .posterMain .container {
-  height: 81vw;
+  height: 49vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 .posterMain .radio {
-  margin-top: 5%;
+  margin-top: 2.5vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -218,11 +230,18 @@ audio {
   z-index: -99;
   opacity: 0;
 }
-#control_music {
+#control__container {
   position: absolute;
-  bottom: 10%;
-  left: 10%;
+  /* bottom: 10%; */
+  /* left: 10%; */
   width: 12%;
+}
+#control_music {
+  /* position: absolute; */
+  /* bottom: 10%; */
+  /* left: 10%; */
+  /* width: 12%; */
   pointer-events: none;
+  display: block;
 }
 </style>
