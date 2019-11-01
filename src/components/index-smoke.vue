@@ -32,11 +32,12 @@ export default {
 }
 .smoke .item {
   float: right;
-  width: 20%;
+  width: 100%;
 }
 .smoke .item img {
   width: 100%;
   pointer-events: none;
+  display: block;
 }
 .smoke .topSmoke {
   margin-bottom: 1%;

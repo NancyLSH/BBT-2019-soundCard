@@ -63,7 +63,7 @@ export default {
   color: #7e9998;
   text-align: center;
   font-size: 4vw;
-  margin: 2% 0 9% 0;
+  margin: 10vw 0 9% 0;
 }
 .poster .btns {
   width: 70%;
@@ -75,8 +75,9 @@ export default {
 }
 .poster .bbt {
   text-align: center;
-  margin-top: 12%;
-  margin-bottom: 5%;
+  position: absolute;
+  width: 100%;
+  bottom: 3%;
 }
 .poster .smoke {
   /* float: right; */

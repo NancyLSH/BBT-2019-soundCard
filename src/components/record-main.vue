@@ -12,24 +12,24 @@
       </div>
     </div>
     <div
-      v-on:touchstart="press"
-      v-on:touchend="pressup"
-      v-on:touchcancel="pressup"
+      @touchstart="press($event)"
+      @touchend="pressup($event)"
+      @touchcancel="pressup($event)"
     >
-      <div class="startBtn" v-if="startBtn">
+      <div class="startBtn" v-show="startBtn">
         <div class="btn">
           <img :src="start" />
         </div>
         <div class="tip">不能多于一分钟哦~</div>
       </div>
-      <div class="stopBtn" v-if="stopBtn">
+      <div class="stopBtn" v-show="stopBtn">
         <div class="btn">
           <img :src="stop" />
         </div>
         <div class="tip">不能多于一分钟哦~</div>
       </div>
     </div>
-    <div class="submitBtn" v-if="submitBtn">
+    <div class="submitBtn" v-show="submitBtn">
       <div class="btns">
         <div class="btn" style="margin-bottom:4%" @click="poster">
           <img :src="toPoster" />
@@ -74,6 +74,13 @@ export default {
     };
   },
   mounted() {
+    // this.$refs.recordBnt.addEventListener("touchcancel", this.pressup);
+    // this.$refs.recordBnt.addEventListener("touchend", this.pressup);
+    // this.$refs.recordBnt.addEventListener("touchstart", this.press);
+    // document.οncοntextmenu = function(e) {
+    //   //或者return false;
+    //   e.preventDefault();
+    // };
     wxconfig().then(res => {
       wx.config({
         debug: false,
@@ -119,36 +126,39 @@ export default {
     nickname: String
   },
   methods: {
-    press() {
+    press(e) {
+      e.preventDefault();
       this.rotate = true;
       this.startRercord = true;
       this.stopBtn = true;
       this.startBtn = false;
       this.isRotate = true;
       console.log("start record");
-      wx.startRecord();
     },
-    pressup() {
+    pressup(e) {
+      e.preventDefault();
       this.rotate = true;
       this.stopRecord = true;
       console.log("stop record");
-      wx.stopRecord({
-        success: res => {
-          console.log("stop success");
-          this.id = res.localId;
-          submitId(this.id).then(res => {
-            console.log(res);
-            if (res.status === 401) {
-              this.$router.push("index");
-            } else {
-              this.startBtn = false;
-              this.stopBtn = false;
-              this.submitBtn = true;
-              this.isRotate = false;
-            }
-          });
+      submitId(
+        Math.random()
+          .toString(36)
+          .substr(2)
+      ).then(res => {
+        if (res.status === 401) {
+          this.$router.push("index");
+        } else {
+          this.startBtn = false;
+          this.stopBtn = false;
+          this.submitBtn = true;
+          this.isRotate = false;
         }
       });
+
+      // this.startBtn = false;
+      // this.stopBtn = false;
+      // this.submitBtn = true;
+      // this.isRotate = false;
     },
     again() {
       this.rotate = false;
@@ -235,6 +245,6 @@ export default {
   font-size: 3vw;
   margin-top: 1vw;
   margin-bottom: 16vw;
-  user-select:none;
+  /* user-select: none; */
 }
 </style>

@@ -58,6 +58,6 @@ body,
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 100%;
+  width: 20%;
 }
 </style>

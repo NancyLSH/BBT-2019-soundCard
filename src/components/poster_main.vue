@@ -35,9 +35,9 @@
           <div class="radio">
             <div class="btn"></div>
             <div class="text">
-              这是为你匹配的声音，快来听听吧
+              这是为你匹配的声音，快来听听吧~
               <div class="content">
-                <div class="str">{{ firststr }}</div>
+                <div class="str" v-html="firststr"></div>
                 <div class="str">{{ laststr }}</div>
               </div>
             </div>
@@ -196,12 +196,12 @@ export default {
   width: 90%;
 }
 .posterMain .radio .btn {
-  width: 15%;
+  width: 12%;
 }
 .posterMain .radio .text {
-  font-size: 3.3vw;
-  width: 81%;
-  text-align: center;
+  font-size: 3vw;
+  width: 83%;
+  text-align: right;
 }
 .posterMain .info .title {
   display: flex;
@@ -223,5 +223,6 @@ audio {
   bottom: 10%;
   left: 10%;
   width: 12%;
+  pointer-events: none;
 }
 </style>
