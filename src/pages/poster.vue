@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="bbt">
-      <img :src="bbtLogo" style="width:20%;pointer-events: none;" />
+      <img :src="bbtLogo" style="width:22%;pointer-events: none;" />
     </div>
     <div class="smoke">
       <img :src="smoke" />
@@ -56,7 +56,7 @@ export default {
 }
 .poster {
   height: 100%;
-  padding-top: 6vh;
+  padding-top: 3vh;
   box-sizing: border-box;
 }
 .poster .savetip {
@@ -78,7 +78,7 @@ export default {
   text-align: center;
   position: absolute;
   width: 100%;
-  bottom: 1vh;
+  bottom: 3vh;
 }
 .poster .smoke {
   /* float: right; */

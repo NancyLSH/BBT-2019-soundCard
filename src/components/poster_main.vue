@@ -137,7 +137,7 @@ export default {
 
 <style>
 .posterMain {
-  height: 58vh;
+  height: calc(81vw + 8.5vh);
   margin: auto;
   width: 85%;
 }
@@ -194,7 +194,7 @@ export default {
   width: 90%;
 }
 .posterMain .container {
-  height: 49vh;
+  height: 81vw;
   display: flex;
   flex-direction: column;
   justify-content: center;

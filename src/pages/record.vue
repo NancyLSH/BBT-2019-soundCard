@@ -21,5 +21,6 @@ export default {
 .record {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 </style>
